@@ -1,12 +1,15 @@
 import React from 'react';
-import Hello from './Hello.jsx';
-import Info from './Info.jsx';
-
+import Signup from "./Signup";
+import Login from "./Login";
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 const App = () => (
   <div>
-    <h1>Welcome to Meteor!</h1>
-    <Hello />
-    <Info />
+    <Router>
+      <div>
+          <Route path='/' exact component={Login}/>
+        <Route path="/signup" exact component={Signup} />
+      </div>
+    </Router>
   </div>
 );
 
