@@ -2,18 +2,25 @@ import React, {Component} from 'react';
 import {TextField, Button} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import validator from 'validator';
+import {Meteor} from "meteor/meteor";
 
-export default class Signup extends Component {
+class Signup extends Component {
     state = {
         email: '',
         nome: '',
         pssw: '',
     };
     signup = () => {
-
-        Meteor.call('signup', this.state.nome, this.state.email, this.state.pssw, this.state.nome)
+        Meteor.call('signup', this.state.email, this.state.email, this.state.pssw, this.state.nome)
     };
+    salvarUser = (doc) => {
+        if (doc._id) {
+            UserDao.update({_id: doc._id}, {$set: doc});
+        } else
+            UserDao.insert(doc);
 
+        this.setState({openSnack:true});
+    };
     render() {
         return (
             <div style={{
@@ -59,3 +66,4 @@ export default class Signup extends Component {
         );
     }
 }
+export default Signup;

@@ -10,7 +10,9 @@ export default class Login extends Component {
         pssw: '',
     };
     login = () => {
-        Meteor.loginWithPassword(this.state.email, this.state.pssw)
+        Meteor.loginWithPassword(this.state.email, this.state.pssw,(result)=>{
+            console.log(result);
+        })
     };
 
     render() {
@@ -35,15 +37,16 @@ export default class Login extends Component {
                         alignItems: 'center',
                         padding: '10px'
                     }}>
-                        <TextField style={{marginBottom:'5px'}} error={validator.isEmail(this.state.email)}
+                        <TextField style={{marginBottom:'5px'}} error={!validator.isEmail(this.state.email) && this.state.email !== ''}
                                    helperText={validator.isEmail(this.state.email) || this.state.email === '' ? '' : 'E-mail invalido'}
                                    onChange={event => this.setState({email: event.target.value})} label="E-mail"
                         fullWidth/>
                         <TextField style={{marginBottom:'5px'}} onChange={event => this.setState({pssw: event.target.value})} fullWidth label="Senha"
                                    type="password"/>
-                        <Button style={{marginBottom:'5px'}} variant='contained' onClick={this.login} fullWidth>Entrar</Button>
-                        <Button style={{marginBottom:'5px'}} variant='contained' onClick={() => this.props.history.push('/signup')}
+                        <Button style={{marginBottom:'5px'}} variant='contained' color='primary' onClick={this.login} fullWidth>Entrar</Button>
+                        <Button style={{marginBottom:'10px'}} variant='outlined' color='secondary'  onClick={() => this.props.history.push('/signup')}
                                 fullWidth>Cadastrar</Button>
+                        <a onClick={() => this.props.history.push('/recovery')}>Esqueceu sua senha?</a>
                     </div>
                 </Card>
             </div>
