@@ -2,13 +2,13 @@ import { Meteor } from 'meteor/meteor';
 import {Signup, sendEmailConfir} from './accountManager';
 
 function configureMailServer() {
-    process.env.MAIL_URL = 'smtp://localhost';
+    process.env.MAIL_URL = 'contato@trovadordosmundos.com:teste123456789@smtp.trovadordosmundos.com:465';
 }
 Meteor.startup(() => {
-    configureMailServer;
+    configureMailServer();
   Meteor.methods({
         'signup':(nome,email,password)=>Signup(nome,email,password,nome),
-      'sendEmail':(email)=>sendEmailConfir('jorgemauro1000@hotmail.com','10','jorge',"é isso ai")
+      'sendEmail':(email)=>sendEmailConfir(email)
       }
 
   )

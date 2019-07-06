@@ -1,6 +1,6 @@
 import React from 'react';
 import Signup from "./pages/Signup";
-import Login from "./pages/Login";
+import {Login} from "./pages/Login";
 import {createMuiTheme, MuiThemeProvider}  from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";

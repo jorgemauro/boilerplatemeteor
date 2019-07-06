@@ -4,13 +4,7 @@ import Card from "@material-ui/core/Card";
 import validator from 'validator';
 import {Meteor} from "meteor/meteor";
 
-class RecoverPassword extends Component {
-    state = {
-        email: '',
-    };
-    sendEmailRecover = () => {
-        Meteor.call('sendEmail', this.state.email)
-    };
+const
     styles ={
         background:{
             display: 'flex',
@@ -42,14 +36,21 @@ class RecoverPassword extends Component {
         },
 
     };
+class RecoverPassword extends Component {
+    state = {
+        email: '',
+    };
+    sendEmailRecover = () => {
+        Meteor.call('sendEmail', this.state.email)
+    };
     render() {
         return (
-            <div style={this.styles.background}>
-                <Card style={this.styles.card}>
-                    <div style={this.styles.imgContainer}>
-                        <img style={this.styles.img} src='/image/getemail.svg'/>
+            <div style={styles.background}>
+                <Card style={styles.card}>
+                    <div style={styles.imgContainer}>
+                        <img style={styles.img} src='/image/getemail.svg'/>
                     </div>
-                    <div style={this.styles.contentContainer}>
+                    <div style={styles.contentContainer}>
                         <TextField  style={{marginBottom:'5px'}} error={validator.isEmail(this.state.email)}
                                     helperText={validator.isEmail(this.state.email) || this.state.email === '' ? '' : 'E-mail invalido'}
                                     fullWidth

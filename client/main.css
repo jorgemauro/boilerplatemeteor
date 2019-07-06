@@ -7,3 +7,9 @@ a{
   font-weight: bolder;
   cursor: pointer;
 }
+.marginFields{
+  margin-bottom: 5px;
+}
+.marginButton{
+  margin-bottom: 10px;
+}
