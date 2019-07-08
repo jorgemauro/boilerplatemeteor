@@ -7,5 +7,5 @@ export const Signup = (username, email, password, profile) => {
 
 };
 export const sendEmailConfir=(to, id, nome, subject)=>{
-    Email.send({ to, from:'Jorge@teste.com', subject:'Jorge', text:'testando' })
+    Email.send({ to, from:'smtpfree1209@gmail.com', subject:'Jorge', text:'testando' })
 };
