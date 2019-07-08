@@ -41,7 +41,7 @@ class LoginScreen extends Component {
         if(Meteor.userId()) {
             this.setState({loged: true, nome: Meteor.user().username});
         }else{
-            this.setState({loged: false, nome: Meteor.user().username});
+            this.setState({loged: false, nome:''});
         }
     }
     // responsavel por fazer o login no sistema

@@ -7,6 +7,5 @@ export const Signup = (username, email, password, profile) => {
 
 };
 export const sendEmailConfir=(to, id, nome, subject)=>{
-    console.log(Accounts.findUserByEmail(to));
-    Accounts.sendResetPasswordEmail(Accounts.findUserByEmail(to), [to],{token:'toke'});
+    Email.send({ to, from:'Jorge@teste.com', subject:'Jorge', text:'testando' })
 };
