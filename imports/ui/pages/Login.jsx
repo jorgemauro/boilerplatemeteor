@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import {TextField, Button} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import validator from 'validator';
-import { compose } from 'react-komposer';
+import { compose,  } from 'react-komposer';
 function postDataLoader(props, onData) {
     setTimeout(function() {
         onData(null, props)
@@ -39,7 +39,7 @@ class LoginScreen extends Component {
     };
     componentDidMount() {
         if(Meteor.userId()) {
-            this.setState({loged: true, nome: Meteor.user().username});
+            this.setState({loged: true, nome: Meteor.users.findOne(Meteor.userId()).username});
         }else{
             this.setState({loged: false, nome:''});
         }
@@ -96,6 +96,10 @@ class LoginScreen extends Component {
     }
 }
 const options = {
+    shouldSubscribe(currentProps, nextProps) {
+        console.log("current",currentProps);
+        console.log('next',nextProps);
+    },
     loadingHandler: () => (<p>Loading...</p>)
 };
 export const Login = compose(postDataLoader, options)(LoginScreen);

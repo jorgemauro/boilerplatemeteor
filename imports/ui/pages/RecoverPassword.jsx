@@ -41,7 +41,7 @@ class RecoverPassword extends Component {
         email: '',
     };
     sendEmailRecover = () => {
-        Meteor.call('sendEmail', this.state.email)
+        Meteor.call('sendEmail', this.state.email);
     };
     render() {
         return (
