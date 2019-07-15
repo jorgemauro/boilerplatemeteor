@@ -40,13 +40,15 @@ const
 class RecoverPassword extends Component {
     state = {
         email: '',
+        enviado:false
     };
     sendEmailRecover = () => {
+        const self=this;
         Accounts.forgotPassword({email: this.state.email}, function (e, r) {
                 if (e) {
                     console.log(e.reason);
                 } else {
-                    console.log("foi!")
+                   self.setState({enviado:true});
                 }
             });
 
@@ -54,7 +56,13 @@ class RecoverPassword extends Component {
     };
     render() {
         return (
-            <div style={styles.background}>
+            this.state.enviado?<div style={styles.background}>
+                <Card style={styles.card}>
+                    <div style={styles.imgContainer}>
+                        <img style={styles.img} src='/image/emailenviado.svg'/>
+                    </div>
+                </Card>
+            </div>:<div style={styles.background}>
                 <Card style={styles.card}>
                     <div style={styles.imgContainer}>
                         <img style={styles.img} src='/image/getemail.svg'/>
