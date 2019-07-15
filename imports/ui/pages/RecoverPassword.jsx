@@ -3,6 +3,7 @@ import {TextField, Button} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import validator from 'validator';
 import {Meteor} from "meteor/meteor";
+import {Accounts} from 'meteor/accounts-base';
 
 const
     styles ={
@@ -41,7 +42,15 @@ class RecoverPassword extends Component {
         email: '',
     };
     sendEmailRecover = () => {
-        Meteor.call('sendEmail', this.state.email);
+        Accounts.forgotPassword({email: this.state.email}, function (e, r) {
+                if (e) {
+                    console.log(e.reason);
+                } else {
+                    console.log("foi!")
+                }
+            });
+
+        //Meteor.call('sendEmail', this.state.email);
     };
     render() {
         return (
