@@ -1,6 +1,7 @@
 import React from 'react';
 import Signup from "./pages/Signup";
 import {Login} from "./pages/Login";
+import {Resetpssw} from "./pages/Resetpssw";
 import {createMuiTheme, MuiThemeProvider}  from '@material-ui/core/styles';
 import CssBaseline from '@material-ui/core/CssBaseline';
 import {BrowserRouter as Router, Route, Link} from "react-router-dom";
@@ -24,6 +25,7 @@ const App = () => (
                     <Route path='/' exact component={Login}/>
                     <Route path="/signup" exact component={Signup}/>
                     <Route path="/recovery" exact component={RecoverPassword}/>
+                    <Route path="/reset-password/:token" exact component={Resetpssw}/>
                 </MuiThemeProvider>
             </div>
         </Router>

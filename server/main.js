@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import {Signup, sendEmailConfir} from './accountManager';
+import {Signup, sendEmailConfir, resetpssw} from './accountManager';
 import {Accounts} from 'meteor/accounts-base';
 // server/smtp.js
 function configureMailServer() {
@@ -16,27 +16,24 @@ Meteor.startup(() => {
     configureMailServer();
     Accounts.emailTemplates.siteName = 'boilerPlate';
     Accounts.emailTemplates.from = 'Boilerplate <accounts@example.com>';
-
     Accounts.emailTemplates.enrollAccount.subject = (user) => {
-        return `Welcome to Awesome Town, ${user.profile.name}`;
+        return `Bom te ver por aqui, ${user.profile.name}`;
     };
 
     Accounts.emailTemplates.enrollAccount.text = (user, url) => {
-        return 'You have been selected to participate in building a better future!'
-            + ' To activate your account, simply click the link below:\n\n'
+        return ' Para ativar sua conta basta clicar no link:\n\n'
             + url;
     };
 
     Accounts.emailTemplates.resetPassword.from = () => {
-        // Overrides the value set in `Accounts.emailTemplates.from` when resetting
-        // passwords.
-        return 'Boilerplate Password Reset <no-reply@example.com>';
+        return 'Boilerplate Password Reset <no-reply@boiler.com>';
     };
     Accounts.emailTemplates.resetPassword.subject = (user,url) => {
         return `recuperar a senha`;
     };
     Accounts.emailTemplates.resetPassword.text = (user,url) => {
-        return `Seja bem vindo, ${user.username}! esse é o link para verificação do : ${url}`;
+        const urlfinal=urlSplit[0]+'//'+urlSplit[2]+'/'+urlSplit[4]+'/'+urlSplit[5];
+        return `Seja bem vindo, ${user.username}! link para cria a nova senha : ${urlfinal}`;
     };
     Accounts.emailTemplates.verifyEmail = {
         subject() {
@@ -48,7 +45,8 @@ Meteor.startup(() => {
     };
   Meteor.methods({
         'signup':(nome,email,password)=>Signup(nome,email,password,nome),
-      'sendEmail':(email)=>sendEmailConfir(email)
+      'sendEmail':(email)=>sendEmailConfir(email),
+      'resetpssw':(pssw, token)=>resetpssw(pssw, token)
       }
 
   )

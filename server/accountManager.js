@@ -11,4 +11,3 @@ export const Signup = (username, email, password, profile) => {
 export const sendEmailConfir=(to)=>{
     Email.send({ to, from:'smtpfree1209@gmail.com', subject:'Jorge', text:'testando' })
 };
-
