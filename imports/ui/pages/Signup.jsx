@@ -3,6 +3,7 @@ import {TextField, Button} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import validator from 'validator';
 import {Meteor} from "meteor/meteor";
+import {Accounts} from "meteor/accounts-base";
 const styles={
     screen:{
         display: 'flex',
@@ -32,7 +33,12 @@ class Signup extends Component {
         psswConfirm: '',
     };
     signup = () => {
-        Meteor.call('signup', this.state.email, this.state.email, this.state.pssw, this.state.nome)
+        Accounts.createUser({username:this.state.nome, email:this.state.email, password:this.state.pssw, profile:this.state.nome},(resp)=>{
+            if(resp)
+                console.log(resp);
+            else
+                Meteor.call('signup', this.state.nome);
+        });
     };
     comparePsw=()=>{
         return this.state.pssw===this.state.psswConfirm

@@ -37,14 +37,15 @@ Meteor.startup(() => {
     };
     Accounts.emailTemplates.verifyEmail = {
         subject() {
-            return "você ativou sua nova!";
+            return "Ative sua conta!!";
         },
         text(user, url) {
-            return `Seja bem vindo, ${user}! esse é o link para verificação do : ${url}`;
+            const urlfinal=urlSplit[0]+'//'+urlSplit[2]+'/'+urlSplit[4]+'/'+urlSplit[5];
+            return `Seja bem vindo, ${user.username}! esse é o link para verificação do : ${urlfinal}`;
         }
     };
   Meteor.methods({
-        'signup':(nome,email,password)=>Signup(nome,email,password,nome),
+        'signup':(nome)=>Signup(nome),
       'sendEmail':(email)=>sendEmailConfir(email),
       'resetpssw':(pssw, token)=>resetpssw(pssw, token)
       }
