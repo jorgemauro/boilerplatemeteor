@@ -59,7 +59,7 @@ class RecoverPassword extends Component {
             this.state.enviado?<div style={styles.background}>
                 <Card style={styles.card}>
                     <div style={styles.imgContainer}>
-                        <img style={styles.img} src='/image/emailenviado.svg'/>
+                        <img style={styles.img} src='/image/sendEmail.svg'/>
                     </div>
                 </Card>
             </div>:<div style={styles.background}>

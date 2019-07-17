@@ -44,13 +44,6 @@ const styles = {
 
 class VerifyEmailScreen extends Component {
 
-
-    state = {
-        pssw: '',
-        psswConfirm: '',
-        changed: false,
-    };
-
     componentDidMount() {
         Accounts.verifyEmail(this.props.match.params.token);
     }

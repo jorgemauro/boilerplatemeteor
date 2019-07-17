@@ -1,5 +1,5 @@
 import { Meteor } from 'meteor/meteor';
-import {Signup, sendEmailConfir, resetpssw} from './accountManager';
+import {Signup, sendEmailConfir, bodyEmail} from './accountManager';
 import {Accounts} from 'meteor/accounts-base';
 // server/smtp.js
 function configureMailServer() {
@@ -12,6 +12,8 @@ function configureMailServer() {
 
     process.env.MAIL_URL = 'smtp://' + encodeURIComponent(smtp.username) + ':' + encodeURIComponent(smtp.password) + '@' + encodeURIComponent(smtp.server) + ':' + smtp.port+'?tls.rejectUnauthorized=false';
 }
+const body =
+
 Meteor.startup(() => {
     configureMailServer();
     Accounts.emailTemplates.siteName = 'boilerPlate';
@@ -29,19 +31,21 @@ Meteor.startup(() => {
         return 'Boilerplate Password Reset <no-reply@boiler.com>';
     };
     Accounts.emailTemplates.resetPassword.subject = (user,url) => {
-        return `recuperar a senha`;
+        return `recuperação a senha - Boilerplate`;
     };
-    Accounts.emailTemplates.resetPassword.text = (user,url) => {
+    Accounts.emailTemplates.resetPassword.html = (user,url) => {
+        const urlSplit=url.split('/');
         const urlfinal=urlSplit[0]+'//'+urlSplit[2]+'/'+urlSplit[4]+'/'+urlSplit[5];
-        return `Seja bem vindo, ${user.username}! link para cria a nova senha : ${urlfinal}`;
+        return bodyEmail(user.username,` link para cria a nova senha : <a href="${urlfinal}">Clique aqui</a>`);
     };
     Accounts.emailTemplates.verifyEmail = {
         subject() {
             return "Ative sua conta!!";
         },
-        text(user, url) {
+        html(user, url) {
+            const urlSplit=url.split('/');
             const urlfinal=urlSplit[0]+'//'+urlSplit[2]+'/'+urlSplit[4]+'/'+urlSplit[5];
-            return `Seja bem vindo, ${user.username}! esse é o link para verificação do : ${urlfinal}`;
+            return bodyEmail(user.username,`esse é o link para verificação do : <a href="${urlfinal}">Clique aqui</a>`);
         }
     };
   Meteor.methods({
