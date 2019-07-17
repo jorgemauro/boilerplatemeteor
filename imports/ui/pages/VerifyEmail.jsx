@@ -43,28 +43,17 @@ const styles = {
 };
 
 class VerifyEmailScreen extends Component {
+
+
     state = {
         pssw: '',
         psswConfirm: '',
         changed: false,
     };
-    resetpssw = () => {
-        if (this.comparePsw) {
-            let self = this
-            Accounts.resetPassword(this.props.match.params.token, this.state.pssw, (resp) => {
-                if (resp) {
-                    console.log(resp);
-                    alert('erro');
-                } else
-                    self.setState({changed: true});
-            });
-        } else
-            alert('As senhas não são iguais');
-    };
-    comparePsw = () => {
-        return this.state.pssw === this.state.psswConfirm
-    };
 
+    componentDidMount() {
+        Accounts.verifyEmail(this.props.match.params.token);
+    }
     render() {
         return (
             <div style={styles.screen}>
@@ -72,7 +61,7 @@ class VerifyEmailScreen extends Component {
                     <div style={styles.imageContainer}>
                         <img style={styles.image} src='/image/getemail.svg'/>
                     </div>
-                    <div style={styles.fields}><h2>Sua copnta esta ativa</h2></div>
+                    <div style={styles.fields}><h2>Sua conta esta ativa</h2></div>
                 </Card>
             </div>
         );
