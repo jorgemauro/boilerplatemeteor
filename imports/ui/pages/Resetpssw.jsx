@@ -49,12 +49,13 @@ const ResetpsswScreen=(props)=>{
     const [psswConfirm, setPsswConfirm] = useState('');
     const resetpssw = () => {
         if (comparePsw) {
+            props.isLoading(true);
             Accounts.resetPassword(props.match.params.token,pssw, (resp) => {
                 if (resp) {
-                    console.log(resp);
                     alert('erro');
                 } else
                     setChanged(true);
+                props.isLoading(false);
             });
         } else
             alert('As senhas não são iguais');

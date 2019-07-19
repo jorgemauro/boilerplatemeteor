@@ -33,13 +33,16 @@ const Signup =(props)=>{
     const [psswConfirm, setPsswConfirm] = useState('');
 
     const signup = () => {
+        props.isLoading(true);
         Accounts.createUser({username:nome, email:email, password:pssw, profile:nome},(resp)=>{
             if(resp)
                 console.log(resp);
             else
                 Meteor.call('signup',nome,(result)=>{
-                    if(!result)
+                    if(!result) {
                         setSigned(true);
+                        props.isLoading(false);
+                    }
                     else
                         alert(result);
                 });

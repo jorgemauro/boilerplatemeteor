@@ -64,9 +64,9 @@ const styles={
                     </div>
                     <div  style={styles.fields}>
                         <TextField className="marginFields" error={!validator.isEmail(email) && email !== ''}
-                                   helperText={validator.isEmail(email) || email === '' ? '' : 'E-mail invalido'}
-                                   onChange={event => setEmail( event.target.value)} label="E-mail"
-                        fullWidth/>
+                                   helperText={!validator.isEmail(email) && email === '' ? '' : 'E-mail invalido'}
+                                   fullWidth
+                                   onChange={event => setEmail(event.target.value)} label="E-mail"/>
                         <TextField className="marginFields" onChange={event => setPssw(event.target.value)} fullWidth label="Senha"
                                    type="password"/>
                         <Button  className="marginFields" variant='contained' color='primary' onClick={login} fullWidth>Entrar</Button>

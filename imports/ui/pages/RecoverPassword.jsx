@@ -41,15 +41,13 @@ const RecoverPassword =(props)=> {
     const [email, setEmail] = useState('');
     const [enviado, setEnviado] = useState(false);
     const sendEmailRecover = () => {
-        console.log('email', email);
-        console.log('enviado',enviado);
-        console.log('teste');
+        props.isLoading(true);
         Accounts.forgotPassword({email:email}, function (e, r) {
                 if (e) {
                     console.log(e.reason);
                 } else {
                    setEnviado(true);
-                    console.log('enviado2',enviado);
+                    props.isLoading(false);
                 }
             });
 
@@ -68,10 +66,10 @@ const RecoverPassword =(props)=> {
                         <img style={styles.img} src='/image/getemail.svg'/>
                     </div>
                     <div style={styles.contentContainer}>
-                        <TextField  style={{marginBottom:'5px'}} error={!validator.isEmail(email)}
-                                    helperText={validator.isEmail(email) || email === '' ? '' : 'E-mail invalido'}
-                                    fullWidth
-                                    onChange={event => setEmail(event.target.value)} label="Entre com seu e-mail registrado"/>
+                        <TextField className="marginFields" error={!validator.isEmail(email) && email !== ''}
+                                   helperText={!validator.isEmail(email) && email === '' ? '' : 'E-mail invalido'}
+                                   fullWidth
+                                   onChange={event => setEmail(event.target.value)} label="Digite aqui seu e-mail para recuperar sua senha"/>
                         <Button variant='contained' color='primary' onClick={sendEmailRecover} fullWidth>Enviar e-mail</Button>
                     </div>
                 </Card>
