@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {TextField, Button} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import validator from 'validator';
@@ -37,26 +37,26 @@ const
         },
 
     };
-class RecoverPassword extends Component {
-    state = {
-        email: '',
-        enviado:false
-    };
-    sendEmailRecover = () => {
-        const self=this;
-        Accounts.forgotPassword({email: this.state.email}, function (e, r) {
+const RecoverPassword =(props)=> {
+    const [email, setEmail] = useState('');
+    const [enviado, setEnviado] = useState(false);
+    const sendEmailRecover = () => {
+        console.log('email', email);
+        console.log('enviado',enviado);
+        console.log('teste');
+        Accounts.forgotPassword({email:email}, function (e, r) {
                 if (e) {
                     console.log(e.reason);
                 } else {
-                   self.setState({enviado:true});
+                   setEnviado(true);
+                    console.log('enviado2',enviado);
                 }
             });
 
         //Meteor.call('sendEmail', this.state.email);
     };
-    render() {
         return (
-            this.state.enviado?<div style={styles.background}>
+            enviado?<div style={styles.background}>
                 <Card style={styles.card}>
                     <div style={styles.imgContainer}>
                         <img style={styles.img} src='/image/sendEmail.svg'/>
@@ -68,15 +68,15 @@ class RecoverPassword extends Component {
                         <img style={styles.img} src='/image/getemail.svg'/>
                     </div>
                     <div style={styles.contentContainer}>
-                        <TextField  style={{marginBottom:'5px'}} error={validator.isEmail(this.state.email)}
-                                    helperText={validator.isEmail(this.state.email) || this.state.email === '' ? '' : 'E-mail invalido'}
+                        <TextField  style={{marginBottom:'5px'}} error={!validator.isEmail(email)}
+                                    helperText={validator.isEmail(email) || email === '' ? '' : 'E-mail invalido'}
                                     fullWidth
-                                    onChange={event => this.setState({email: event.target.value})} label="Entre com seu e-mail registrado"/>
-                        <Button variant='contained' color='primary' onClick={this.sendEmailRecover} fullWidth>Enviar e-mail</Button>
+                                    onChange={event => setEmail(event.target.value)} label="Entre com seu e-mail registrado"/>
+                        <Button variant='contained' color='primary' onClick={sendEmailRecover} fullWidth>Enviar e-mail</Button>
                     </div>
                 </Card>
             </div>
         );
-    }
-}
+
+};
 export default RecoverPassword;

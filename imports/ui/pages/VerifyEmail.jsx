@@ -55,6 +55,7 @@ class VerifyEmailScreen extends Component {
                         <img style={styles.image} src='/image/getemail.svg'/>
                     </div>
                     <div style={styles.fields}><h2>Sua conta esta ativa</h2></div>
+                    <Button variant="contained" color='secondary' onClick={()=>props.history.push('/')}>Login</Button>
                 </Card>
             </div>
         );
@@ -62,10 +63,6 @@ class VerifyEmailScreen extends Component {
 }
 
 const options = {
-    shouldSubscribe(currentProps, nextProps) {
-        console.log("current", currentProps);
-        console.log('next', nextProps);
-    },
     loadingHandler: () => (<p>Loading...</p>)
 };
 export const VerifyEmail = compose(postDataLoader, options)(VerifyEmailScreen);

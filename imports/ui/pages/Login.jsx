@@ -1,12 +1,11 @@
-import React, {Component} from 'react';
+import React, {Component, useState, useEffect} from 'react';
 import {TextField, Button} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import validator from 'validator';
 import { compose,  } from 'react-komposer';
 function postDataLoader(props, onData) {
     setTimeout(function() {
-        onData(null, props)
-        console.log(props);
+        onData(null, props);
     }, 500);
 }
 const styles={
@@ -30,54 +29,50 @@ const styles={
         padding: '10px'
     }
 };
-class LoginScreen extends Component {
-    state = {
-        loged:false,
-        email: '',
-        nome: '',
-        pssw: '',
-    };
-    componentDidMount() {
-        if(Meteor.userId()) {
-            this.setState({loged: true, nome: Meteor.users.findOne(Meteor.userId()).username});
-        }else{
-            this.setState({loged: false, nome:''});
-        }
-    }
+ const LoginScreen=(props)=> {
+     const [loged, setLoged] = useState(false);
+     const [email, setEmail] = useState('');
+     const [nome, setNome] = useState('');
+     const [pssw, setPssw] = useState('');
+     useEffect(()=>{
+         if(Meteor.userId()) {
+             setLoged(true);
+             setNome(Meteor.users.findOne(Meteor.userId()).username);
+         }else{
+             setLoged(false);
+         }
+     });
     // responsavel por fazer o login no sistema
-    login = () => {
-        Meteor.loginWithPassword(this.state.email, this.state.pssw,(result)=>{
+    const login = () => {
+        Meteor.loginWithPassword(email, pssw,(result)=>{
             if(!result)
-            this.setState({loged:true});
+            setLoged(true);
             else
                 alert(result);
         });
     };
     // funcao que executa o logout do sistema
-    logout = () => {
-        Meteor.loggingOut();
-            this.setState({loged: false});
+    const logout = () => {
+        Meteor.logout(()=>
+            setLoged(false));
     };
-
-    render() {
-        console.log(this.state.loged);
         return (
-            !this.state.loged?<div style={styles.screen}>
+            !loged?<div style={styles.screen}>
                 <Card style={styles.card}>
                     <div style={styles.imageContainer}>
                         <img style={styles.image} src='/image/login.svg'/>
                     </div>
                     <div  style={styles.fields}>
-                        <TextField className="marginFields" error={!validator.isEmail(this.state.email) && this.state.email !== ''}
-                                   helperText={validator.isEmail(this.state.email) || this.state.email === '' ? '' : 'E-mail invalido'}
-                                   onChange={event => this.setState({email: event.target.value})} label="E-mail"
+                        <TextField className="marginFields" error={!validator.isEmail(email) && email !== ''}
+                                   helperText={validator.isEmail(email) || email === '' ? '' : 'E-mail invalido'}
+                                   onChange={event => setEmail( event.target.value)} label="E-mail"
                         fullWidth/>
-                        <TextField className="marginFields" onChange={event => this.setState({pssw: event.target.value})} fullWidth label="Senha"
+                        <TextField className="marginFields" onChange={event => setPssw(event.target.value)} fullWidth label="Senha"
                                    type="password"/>
-                        <Button  className="marginFields" variant='contained' color='primary' onClick={this.login} fullWidth>Entrar</Button>
-                        <Button  className="marginButton" variant='outlined' color='secondary'  onClick={() => this.props.history.push('/signup')}
+                        <Button  className="marginFields" variant='contained' color='primary' onClick={login} fullWidth>Entrar</Button>
+                        <Button  className="marginButton" variant='outlined' color='secondary'  onClick={() => props.history.push('/signup')}
                                 fullWidth>Cadastrar</Button>
-                        <a onClick={() => this.props.history.push('/recovery')}>Esqueceu sua senha?</a>
+                        <a onClick={() => props.history.push('/recovery')}>Esqueceu sua senha?</a>
                     </div>
                 </Card>
             </div>:<div style={{
@@ -88,13 +83,12 @@ class LoginScreen extends Component {
                 height: '100vh',
                 background: 'linear-gradient(211.63deg, #545C6E 22.52%, rgba(255, 255, 255, 0) 85.38%), #2B3343',
             }}><Card style={{display:'flex', width:'80%', height:'80%', alignItems:'center', flexFlow:'column'}}>
-                <h1>Que bom que você esta por aqui {this.state.nome}</h1>
-                <Button  className="marginFields" variant='contained' color='primary' onClick={this.logout} >Logout</Button>
+                <h1>Que bom que você esta por aqui {nome}</h1>
+                <Button  className="marginFields" variant='contained' color='primary' onClick={logout} >Logout</Button>
             </Card>
             </div>
         );
-    }
-}
+};
 const options = {
     shouldSubscribe(currentProps, nextProps) {
         console.log("current",currentProps);

@@ -1,4 +1,4 @@
-import React, {Component} from 'react';
+import React, {Component, useState} from 'react';
 import {TextField, Button} from "@material-ui/core";
 import Card from "@material-ui/core/Card";
 import validator from 'validator';
@@ -25,46 +25,52 @@ const styles={
         padding: '10px'
     },
 };
-class Signup extends Component {
-    state = {
-        email: '',
-        nome: '',
-        pssw: '',
-        psswConfirm: '',
-    };
-    signup = () => {
-        Accounts.createUser({username:this.state.nome, email:this.state.email, password:this.state.pssw, profile:this.state.nome},(resp)=>{
+const Signup =(props)=>{
+    const [signed, setSigned] = useState(false);
+    const [email, setEmail] = useState('');
+    const [nome, setNome] = useState('');
+    const [pssw, setPssw] = useState('');
+    const [psswConfirm, setPsswConfirm] = useState('');
+
+    const signup = () => {
+        Accounts.createUser({username:nome, email:email, password:pssw, profile:nome},(resp)=>{
             if(resp)
                 console.log(resp);
             else
-                Meteor.call('signup', this.state.nome);
+                Meteor.call('signup',nome,(result)=>{
+                    if(!result)
+                        setSigned(true);
+                    else
+                        alert(result);
+                });
         });
     };
-    comparePsw=()=>{
-        return this.state.pssw===this.state.psswConfirm
+    const comparePsw=()=>{
+        return pssw===psswConfirm
     };
-    render() {
         return (
             <div style={styles.screen}>
                 <Card style={styles.card}>
                     <div style={styles.imageContainer}>
                         <img style={styles.image} src='/image/welcome.svg'/>
                     </div>
-                    <div style={styles.fields}>
-                        <TextField className="marginFields" error={!validator.isEmail(this.state.email) && this.state.email !== ''}
-                                   helperText={!validator.isEmail(this.state.email) && this.state.email === '' ? '' : 'E-mail invalido'}
+                    {signed?<div style={styles.fields}>
+                        <h2>Verifique seu e-mail!</h2>
+                        <Button variant="contained" color='secondary' onClick={()=>props.history.push('/')}>Login</Button>
+                    </div>:<div style={styles.fields}>
+                        <TextField className="marginFields" error={!validator.isEmail(email) && email !== ''}
+                                   helperText={!validator.isEmail(email) && email === '' ? '' : 'E-mail invalido'}
                                    fullWidth
-                                   onChange={event => this.setState({email: event.target.value})} label="E-mail"/>
+                                   onChange={event => setEmail(event.target.value)} label="E-mail"/>
                         <TextField className="marginFields"  fullWidth
-                                   onChange={event => this.setState({nome: event.target.value})} label="Nome"/>
-                        <TextField className="marginFields"   fullWidth onChange={event => this.setState({pssw: event.target.value})} label="Senha"
+                                   onChange={event => setNome(event.target.value)} label="Nome"/>
+                        <TextField className="marginFields"   fullWidth onChange={event => setPssw(event.target.value)} label="Senha"
                                    type="password"/>
-                        <TextField className="marginButton" error={this.comparePsw} helperText={this.comparePsw ? '' : 'A duas senhas não são identicas'}   onChange={event => this.setState({psswConfirm: event.target.value})}   fullWidth label="confirmação da senha" type="password"/>
-                        <Button variant='contained' color="primary" onClick={this.signup} fullWidth>Cadastrar</Button>
-                    </div>
+                        <TextField className="marginButton" error={comparePsw} helperText={comparePsw ? '' : 'A duas senhas não são identicas'}   onChange={event => setPsswConfirm(event.target.value)}   fullWidth label="confirmação da senha" type="password"/>
+                        <Button variant='contained' color="primary" onClick={signup} fullWidth>Cadastrar</Button>
+                    </div>}
                 </Card>
             </div>
         );
-    }
 }
 export default Signup;

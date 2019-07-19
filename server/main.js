@@ -22,6 +22,8 @@ Meteor.startup(() => {
         return `Bom te ver por aqui, ${user.profile.name}`;
     };
 
+
+
     Accounts.emailTemplates.enrollAccount.text = (user, url) => {
         return ' Para ativar sua conta basta clicar no link:\n\n'
             + url;
