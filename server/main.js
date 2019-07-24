@@ -5,7 +5,7 @@ import {Accounts} from 'meteor/accounts-base';
 function configureMailServer() {
     const smtp = {
         username: 'smtpfree1209@gmail.com',
-        password: 'senha',
+        password: 'T123456e',
         server:   'smtp.gmail.com',
         port: 587
     };

@@ -48,17 +48,17 @@ const ResetpsswScreen=(props)=>{
     const [pssw, setPssw] = useState('');
     const [psswConfirm, setPsswConfirm] = useState('');
     const resetpssw = () => {
-        if (comparePsw) {
+        if (comparePsw()) {
             props.isLoading(true);
             Accounts.resetPassword(props.match.params.token,pssw, (resp) => {
                 if (resp) {
-                    alert('erro');
+                    props.snackOpenMsg(true,resp.reason)
                 } else
                     setChanged(true);
                 props.isLoading(false);
             });
         } else
-            alert('As senhas não são iguais');
+            props.snackOpenMsg(true,'As senhas não são iguais');
     };
     const comparePsw = () => {
         return pssw === psswConfirm
@@ -75,8 +75,8 @@ const ResetpsswScreen=(props)=>{
                                        onChange={event => setPssw(event.target.value)}
                                        label="digite sua nova senha"
                                        type="password"/>
-                            <TextField className="marginButton" error={comparePsw}
-                                       helperText={comparePsw ? '' : 'A duas senhas não são identicas'}
+                            <TextField className="marginButton" error={!comparePsw()}
+                                       helperText={comparePsw() ? '' : 'A duas senhas não são identicas'}
                                        onChange={event => setPsswConfirm(event.target.value)} fullWidth
                                        label="confirmação da senha" type="password"/>
                             <Button variant='contained' color="primary" onClick={resetpssw} fullWidth>Salvar
