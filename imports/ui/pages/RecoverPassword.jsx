@@ -15,7 +15,7 @@ const
             height: '100vh',
             background: 'linear-gradient(211.63deg, #545C6E 22.52%, rgba(255, 255, 255, 0) 85.38%), #2B3343',
         },
-        card:{display: 'flex', width: '50%', height: '55%',
+        card:{display: 'flex', width: '80%', height: '85%',
             flexFlow:'column', alignItems:'center', justifyContent:'center'},
         imgContainer:{
             width: '94%',

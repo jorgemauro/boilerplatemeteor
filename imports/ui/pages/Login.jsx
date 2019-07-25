@@ -112,7 +112,7 @@ const tradutor=(strings)=>{
                     <TextField className="marginButton" onChange={event => setPssw(event.target.value)} fullWidth
                                label="Senha"
                                type="password"/>
-                    <Button className="marginFields" variant='contained' color='primary' onClick={login}
+                    <Button className="marginBtwButtons" variant='contained' color='primary' onClick={login}
                             fullWidth>Entrar</Button>
                     <Button className="marginButton" variant='outlined' color='secondary'
                             onClick={() => props.history.push('/signup')}
@@ -128,10 +128,6 @@ const tradutor=(strings)=>{
     );
 };
 const options = {
-    shouldSubscribe(currentProps, nextProps) {
-        console.log("current", currentProps);
-        console.log('next', nextProps);
-    },
     loadingHandler: () => (<p>Loading...</p>)
 };
 export const Login = compose(postDataLoader, options)(LoginScreen);

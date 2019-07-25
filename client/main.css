@@ -10,6 +10,9 @@ a{
 .marginFields{
   margin-bottom: 5px;
 }
+.marginBtwButtons{
+  margin-bottom: 10px !important;
+}
 .marginButton{
   margin-bottom: 20px !important;
 }
