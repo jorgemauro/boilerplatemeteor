@@ -5,6 +5,7 @@ import validator from 'validator';
 import {Meteor} from "meteor/meteor";
 import {compose} from "react-komposer";
 import {Accounts} from "meteor/accounts-base";
+import {useWindowDimensions} from "../components/WindowDimensionsProvider";
 
 function postDataLoader(props, onData) {
     setTimeout(function () {
@@ -31,7 +32,16 @@ const styles = {
         justifyContent: 'center',
         alignItems: 'center'
     },
+    imageContainerMobile: {
+        width: '98%',
+        height: '35%',
+        backgroundColor: "#545c6e",
+        display: 'flex',
+        justifyContent: 'center',
+        alignItems: 'center'
+    },
     image: {width: '50%', height: '100%'},
+    imageMobile: {width: '60%'},
     fields: {
         width: '50%',
         display: 'flex',
@@ -40,6 +50,14 @@ const styles = {
         alignItems: 'center',
         padding: '10px'
     },
+    fieldsMobile: {
+        width: '100%',
+        display: 'flex',
+        flexFlow: 'column    ',
+        justifyContent: 'center',
+        alignItems: 'center',
+        padding: '10px'
+    }
 };
 
 const ResetpsswScreen=(props)=>{
@@ -63,14 +81,18 @@ const ResetpsswScreen=(props)=>{
     const comparePsw = () => {
         return pssw === psswConfirm
     };
+    const {width, height} = useWindowDimensions();
+    const screenlimit = width>767;
         return (
             <div style={styles.screen}>
-                <Card style={styles.card}>
-                    <div style={styles.imageContainer}>
+                <Card className={screenlimit?'card':'card-is-vertical'}>
+                    <div style={screenlimit?styles.imageContainer: styles.imageContainerMobile}>
                         <img style={styles.image} src='/image/pssw.svg'/>
                     </div>
-                    {changed ? <div style={styles.fields}><h2>Sua senha foi modificada</h2></div> :
-                        <div style={styles.fields}>
+                    {changed ?
+                        <div style={screenlimit?styles.fields:styles.fieldsMobile}><h2>Sua senha foi modificada</h2></div> :
+
+                        <div style={screenlimit?styles.fields:styles.fieldsMobile}>
                             <TextField className="marginFields" fullWidth
                                        onChange={event => setPssw(event.target.value)}
                                        label="digite sua nova senha"

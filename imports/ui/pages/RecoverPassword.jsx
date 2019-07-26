@@ -67,7 +67,7 @@ const RecoverPassword =(props)=> {
                     </div>
                     <div style={styles.contentContainer}>
                         <TextField className="marginFields" error={!validator.isEmail(email) && email !== ''}
-                                   helperText={!validator.isEmail(email) && email === '' ? '' : 'E-mail invalido'}
+                                   helperText={!validator.isEmail(email) && email !== '' ? 'E-mail invalido' : ''}
                                    fullWidth
                                    onChange={event => setEmail(event.target.value)} label="Digite aqui seu e-mail para recuperar sua senha"/>
                         <Button variant='contained' color='primary' onClick={sendEmailRecover} fullWidth>Enviar e-mail</Button>
