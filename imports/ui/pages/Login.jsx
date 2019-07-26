@@ -99,9 +99,6 @@ const tradutor=(strings)=>{
     const {width, height} = useWindowDimensions();
     const screenlimit = width>767;
     const compareEmail=()=>!validator.isEmail(email) && email !=='';
-    console.log(email);
-    console.log('compareemail', email!=='');
-    console.log('validador',validator.isEmail(email));
     return (
         !loged ? <div style={styles.screen}>
             <Card className={screenlimit?'card':'card-is-vertical'}>

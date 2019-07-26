@@ -61,7 +61,7 @@ const Signup =(props)=>{
         props.isLoading(true);
         Accounts.createUser({username:nome, email:email, password:pssw, profile:nome},(resp)=>{
             if(resp)
-                console.log(resp);
+                props.snackOpenMsg(true,resp.reason)
             else
                 Meteor.call('signup',nome,(result)=>{
                     if(!result) {

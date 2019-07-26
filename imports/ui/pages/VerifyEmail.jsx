@@ -7,10 +7,7 @@ import {compose} from "react-komposer";
 import {Accounts} from "meteor/accounts-base";
 
 function postDataLoader(props, onData) {
-    setTimeout(function () {
-        onData(null, props)
-        console.log(props);
-    }, 500);
+        onData(null, props);
 }
 
 const styles = {

@@ -44,7 +44,7 @@ const RecoverPassword =(props)=> {
         props.isLoading(true);
         Accounts.forgotPassword({email:email}, function (e, r) {
                 if (e) {
-                    console.log(e.reason);
+                    props.snackOpenMsg(true,resp.reason)
                 } else {
                    setEnviado(true);
                     props.isLoading(false);
