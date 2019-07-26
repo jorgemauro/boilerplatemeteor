@@ -8,10 +8,7 @@ import {Accounts} from "meteor/accounts-base";
 import {useWindowDimensions} from "../components/WindowDimensionsProvider";
 
 function postDataLoader(props, onData) {
-    setTimeout(function () {
-        onData(null, props)
-        console.log(props);
-    }, 500);
+        onData(null, props);
 }
 
 const styles = {
